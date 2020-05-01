@@ -1,0 +1,41 @@
+@startuml
+
+!include <tupadr3/common>
+!include <tupadr3/font-awesome-5/database.puml>
+!include <tupadr3/font-awesome-5/certificate.puml>
+!include <tupadr3/font-awesome-5/key.puml>
+
+'database "<$database>Enterprise Events" as kafka #white
+
+frame "Certificate Authority" as CA {
+    file "CA certificate\n<$certificate>" as cacert #LightSalmon
+    file "CA private key\n<$key>" as cakey #LightSalmon
+}
+
+frame "Client" as client {
+    component "User Agent" as agent #LightGreen
+    file "Certificate\n<$certificate>" as clientcert #LightGreen
+    file "Private key\n<$key>" as clientkey #LightGreen
+    file "CA certificate\n<$certificate>" as c_ca #LightSalmon
+    agent -- clientcert
+    agent -- clientkey
+    agent -left-> c_ca : trust
+}
+
+frame "Server" as server {
+    component "Service" as svc #LightBlue
+    file "Certificate\n<$certificate>" as servercert #LightBlue
+    file "Private key\n<$key>" as serverkey #LightBlue
+    file "CA certificate\n<$certificate>" as s_ca #LightSalmon
+    svc -- servercert
+    svc -- serverkey
+    svc -right-> s_ca : trust
+}
+
+clientcert ---> cakey : Signed by
+servercert ---> cakey : Signed by
+agent <-> svc : Network comms
+
+clientcert ..> svc : Sent as proof\nof client identity
+servercert ..> agent : Sent as proof\nof server identity
+@enduml

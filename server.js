@@ -20,36 +20,40 @@ const options = {
 https.createServer(options, (req, res) => {
     const clientcert = req.socket.getPeerCertificate();
 
-    const clientCN = 'client1.somerfield.co.nz';
+    const clientCN = 'client.demo.co.nz';
     if(clientcert.subject.CN !== clientCN) {
         const msg = 'Certificate verification error: ' +
         `The common name of '${clientcert.subject.CN}' ` +
-        'does not match our pinned common name';
+        'does not match our pinned common name\n';
+      res.setHeader('Content-Type','text/plain');
       res.writeHead(401);
       res.end('Not authorised\n' + msg);
+      return;
     }
     
     // Pin the public key
-    const pubkey256 = 'CRNptV/Id+Qwu8+UR3MxHZpjK2hs5jBLyvg6RdrW3TE=';
+    const pubkey256 = '1joByRA4/Q2CtythZpHm0LM6n+7a0/cLmQTafJ5JWF0=';
     if (sha256(clientcert.pubkey) !== pubkey256) {
       const msg = 'Certificate verification error: ' +
         `The public key of '${clientcert.subject.CN}' ` +
-        'does not match our pinned fingerprint';
+        'does not match our pinned fingerprint\n';
+      res.setHeader('Content-Type','text/plain');
       res.writeHead(401);
       res.end('Not authorised\n' + msg);
+      return;
     }
     
-    // Ping the exact client certificate
-    //const cert256 = '75:83:E3:23:49:2C:8E:74:36:9C:70:3D:66:' +
-    //   'E1:58:F0:ED:E8:91:8D:50:C2:8E:A9:2F:38:BD:4B:56:E7:B3:49';
-    const cert256 = 'D4:C7:5E:88:CB:58:B0:23:10:EB:05:D0:6D:' + 
-        '29:BD:78:91:2C:03:5F:7B:B0:8E:A4:62:9F:0F:C6:70:09:DD:5E';
+    // Pin the exact client certificate
+    const cert256 = '7B:9C:62:47:92:84:E0:C9:AC:D5:7C:46:70:' +
+        '51:1F:27:F9:CA:05:20:57:86:48:39:8B:54:3A:DE:A4:AB:02:D7';
     if (clientcert.fingerprint256 !== cert256) {
       const msg = 'Certificate verification error: ' +
         `The certificate of '${clientcert.subject.CN}' ` +
-        'does not match our pinned fingerprint';
+        'does not match our pinned fingerprint\n';
+      res.setHeader('Content-Type','text/plain');
       res.writeHead(401);
       res.end('Not authorised\n' + msg);
+      return;
     }
 
     console.log(new Date()+' '+ 
@@ -57,10 +61,13 @@ https.createServer(options, (req, res) => {
               req.socket.getPeerCertificate().subject.CN+' '+ 
               req.method+' '+req.url);
     console.log('Subject Common Name:', clientcert.subject.CN);
+    console.log('Subject Organisational Unit', clientcert.subject.OU);
     console.log('  Certificate SHA256 fingerprint:', clientcert.fingerprint256);
         
     hash = crypto.createHash('sha256');
     console.log('  Public key ping-sha256:', sha256(clientcert.pubkey));
+  
+  res.setHeader('Content-Type','text/plain');
   res.writeHead(200);
   res.end('hello world\n');
 }).listen(8000);

@@ -18,14 +18,14 @@ const options = {
   checkServerIdentity: function(host, cert) {
     // Make sure the certificate is issued to the host we are connected to
     //const err = tls.checkServerIdentity(host, cert);
-    const err = tls.checkServerIdentity("server1.somerfield.co.nz", cert);
+    const err = tls.checkServerIdentity("www.demoservers.co.nz", cert);
     if (err) {
       return err;
     }
     
 
     // Pin the public key, similar to HPKP pin-sha25 pinning
-    const pubkey256 = 'gFFZngjE27Qt5xEYR8D3l494t8aSPuDRH0cRziiYmVI=';
+    const pubkey256 = 'eD7cedEUCn6z3h9JREmUqL4Q8J7vx7M6wtq27T7/EIs=';
     if (sha256(cert.pubkey) !== pubkey256) {
       const msg = 'Certificate verification error: ' +
         `The public key of '${cert.subject.CN}' ` +
@@ -34,8 +34,8 @@ const options = {
     }
 
     // Pin the exact certificate, rather than the pub key
-    const cert256 = '75:83:E3:23:49:2C:8E:74:36:9C:70:3D:66:' +
-        'E1:58:F0:ED:E8:91:8D:50:C2:8E:A9:2F:38:BD:4B:56:E7:B3:49';
+    const cert256 = '3F:19:7C:86:16:F7:B5:9A:95:7F:67:03:A9:' +
+        'CB:B8:0C:5A:6E:64:9D:27:C7:8A:A8:09:C5:5D:8E:AD:AE:07:9C';
     if (cert.fingerprint256 !== cert256) {
       const msg = 'Certificate verification error: ' +
         `The certificate of '${cert.subject.CN}' ` +
@@ -54,6 +54,9 @@ const options = {
 
       hash = crypto.createHash('sha256');
       console.log('  Public key ping-sha256:', sha256(cert.pubkey));
+      console.log('  Key bits:', cert.bits);
+      console.log('  Valid from:',cert.valid_from);
+      console.log('  Valid to:  ',cert.valid_to);
 
       lastprint256 = cert.fingerprint256;
       cert = cert.issuerCertificate;

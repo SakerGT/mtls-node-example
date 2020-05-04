@@ -1,4 +1,4 @@
-# Mutual TLS and certificate pinning
+# Mutual TLS and certificate validation checks
 
 This project uses Node JS server and client to demonstrate mTLS and validation of additional certificate properties.
 
@@ -22,7 +22,7 @@ The following shows the relative strengths of checks that can be performed using
 
 Ensure you have an install of:
 
-* NodeJS 12 or later
+* NodeJS 10 or later
 * OpenSSL command line tools
   
 ## Setup
@@ -112,6 +112,4 @@ Adjust any of the tests in the body of the code to confirm behaviour
 
 From the `CA` directory:
 
-```bash
-curl -v --cacert ca-crt.pem --cert client1-crt.pem --key client1-key.pem -k https://localhost:8000
-```
+`curl -v --cacert ca-crt.pem --cert client1-crt.pem --key client1-key.pem -k https://localhost:8000`

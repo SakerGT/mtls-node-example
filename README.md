@@ -11,6 +11,8 @@ There are 4 exercises to demonstrate mutual authentication certificate checks th
 
 The below gives some context and motivation for use of mTLS and these examples.  Also included is instructions for generating your own dummy CA and certificates should you wish to.
 
+Contributions are encouraged, please see the [contribution guidelines.](./CONTRIBUTING.md)
+
 ## Overview
 
 This project demonstrates the creation of mutual trust between client and server, using a shared certificate authority (CA).  The CA is trusted by both client and server, and both use certificates that are signed by the CA.  The certificates are used to establish identity between client and server (authenticate their respective identities).

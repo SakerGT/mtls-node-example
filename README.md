@@ -2,6 +2,15 @@
 
 This project uses Node JS server and client to demonstrate mTLS and validation of additional certificate properties.
 
+There are 4 exercises to demonstrate mutual authentication certificate checks that can be done:
+
+1. [Trusted issuer](basic/README.md)
+2. [Common Name check](common-name/README.md)
+3. [Public key fingerprint](public-key-fingerprint/README.md)
+4. [Certificate fingerprint](certificate-fingerprint/README.md)
+
+The below gives some context and motivation for use of mTLS and these examples.  Also included is instructions for generating your own dummy CA and certificates should you wish to.
+
 ## Overview
 
 This project demonstrates the creation of mutual trust between client and server, using a shared certificate authority (CA).  The CA is trusted by both client and server, and both use certificates that are signed by the CA.  The certificates are used to establish identity between client and server (authenticate their respective identities).

@@ -25,6 +25,7 @@ https.createServer(options, (req, res) => {
         const msg = 'Certificate verification error: ' +
         `The common name of '${clientcert.subject.CN}' ` +
         'does not match our pinned common name\n';
+      res.setHeader('WWW-Authenticate','TLS realm=tls-demo');
       res.setHeader('Content-Type','text/plain');
       res.writeHead(401);
       res.end('Not authorised\n' + msg);
@@ -38,6 +39,7 @@ https.createServer(options, (req, res) => {
       const msg = 'Certificate verification error: ' +
         `The public key of '${clientcert.subject.CN}' ` +
         'does not match our pinned fingerprint\n';
+      res.setHeader('WWW-Authenticate','TLS realm=tls-demo');
       res.setHeader('Content-Type','text/plain');
       res.writeHead(401);
       res.end('Not authorised\n' + msg);

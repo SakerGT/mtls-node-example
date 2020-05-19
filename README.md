@@ -1,6 +1,6 @@
 # Mutual TLS and certificate validation checks
 
-This project uses Node JS server and client to demonstrate mTLS and validation of additional certificate properties.
+This project uses Node JS server and client to demonstrate mTLS and validation of additional certificate properties.  It is intended to be used as examples / training material only.
 
 There are 4 exercises to demonstrate mutual authentication certificate checks that can be done:
 

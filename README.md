@@ -125,6 +125,10 @@ From the `CA` directory:
 
 `curl -v --cacert ca-crt.pem --cert client1-crt.pem --key client1-key.pem -k https://localhost:8000`
 
+To include OCSP check:
+
+`curl -v --cacert ca-crt.pem --cert client1-crt.pem --key client1-key.pem -k --cert-status https://localhost:8000`
+
 ## HTTP response codes
 
 This example returns a `200 OK` HTTP response for success, and `401 Not Authorised` on failure, and as required by [RFC7230](https://tools.ietf.org/html/rfc7235#section-3.1) a `WWW-Authenticate` response header is included.  However, no [IANA registered authentication scheme](https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml) is available, so a custom scheme `TLS` with `realm=tls=demo` is returned.  This **should not** be interpreted as requiring the client certificate in an `Authorization` header (which is the normal interpretation `WWW-Authenticate` challenge).

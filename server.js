@@ -14,6 +14,7 @@ const options = {
   ca: fs.readFileSync('CA/ca-crt.pem'),
   requestCert: true, // require certificate
   rejectUnauthorized: true, // must be signed by our CA
+  requestOCSP: true
  
 };
 

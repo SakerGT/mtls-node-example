@@ -14,6 +14,7 @@ const options = {
   key: fs.readFileSync('CA/client1-key.pem'),
   cert: fs.readFileSync('CA/client1-crt.pem'),
   ca: fs.readFileSync('CA/ca-crt.pem'),
+  requestOCSP: true,
 
   checkServerIdentity: function(host, cert) {
     // Make sure the certificate is issued to the host we are connected to
@@ -34,8 +35,8 @@ const options = {
     }
 
     // Pin the exact certificate, rather than the pub key
-    const cert256 = '3F:19:7C:86:16:F7:B5:9A:95:7F:67:03:A9:' +
-        'CB:B8:0C:5A:6E:64:9D:27:C7:8A:A8:09:C5:5D:8E:AD:AE:07:9C';
+    const cert256 = '15:3B:CB:8A:16:DF:09:B3:4B:F7:8B:C8:1A:' +
+        '52:BB:3B:04:04:A7:D7:B5:B2:4B:8A:F3:69:EC:29:87:BD:28:22';
     if (cert.fingerprint256 !== cert256) {
       const msg = 'Certificate verification error: ' +
         `The certificate of '${cert.subject.CN}' ` +

@@ -59,9 +59,25 @@ Generate Server certificate signing request:
 Specify server Common Name, like 'localhost' or 'server.localhost'. The client will verify this, so make sure you have a valid DNS name for this.
 For this example, do not set the challenge password.
 
+Alternatively, specify required information in single command, including subject alternative names:
+
+```bash
+openssl req -new -subj "/C=NZ/ST=Wellington/L=Wellington/O=Demo Servers Ltd/OU=Web Servers/CN=www.demoservers.co.nz/emailAddress=webmaster@demoservers.co.nz" -addext "subjectAltName=DNS:test.demoservers.co.nz,DNS:www.demoservers.co.nz" -key server-key.pem -out server-csr.pem
+```
+
+__Note__: OpenSSL does not copy `subjectAltName` from CSR to certificate.  See the [extensions.cnf](CA/extensions.cnf) file for required configuration.
+
+_Optional_: Print the CSR as text using:
+
+`openssl req -text -noout -verify -in server-csr.pem`
+
 Sign certificate using the CA:
 
 `openssl x509 -req -days 90 -in server-csr.pem -CA ca-crt.pem -CAkey ca-key.pem -CAcreateserial -out server-crt.pem`
+
+Optionally, sign including extensions:
+
+`openssl x509 -req -days 90 -in server-csr.pem -CA ca-crt.pem -CAkey ca-key.pem -CAcreateserial -out server-crt.pem -extfile .\extensions.cnf`
 
 * insert CA Password
 

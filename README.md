@@ -148,6 +148,6 @@ To include OCSP check:
 
 ## HTTP response codes
 
-This example returns a `200 OK` HTTP response for success, and `401 Not Authorised` on failure, and as required by [RFC7230](https://tools.ietf.org/html/rfc7235#section-3.1) a `WWW-Authenticate` response header is included.  However, no [IANA registered authentication scheme](https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml) is available, so a custom scheme `TLS` with `realm=tls=demo` is returned.  This **should not** be interpreted as requiring the client certificate in an `Authorization` header (which is the normal interpretation `WWW-Authenticate` challenge).
+This example returns a `200 OK` HTTP response for success, and `401 Not Authorised` on failure, and as required by [RFC7230](https://tools.ietf.org/html/rfc7235#section-3.1) a `WWW-Authenticate` response header is included.  However, no [IANA registered authentication scheme](https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml) is available, so a custom scheme `TLS` with `realm=tls=demo` is returned.  This __should not__ be interpreted as requiring the client certificate in an `Authorization` header (which is the normal interpretation `WWW-Authenticate` challenge).
 
 It is also possible to use `403 Forbidden` to indicate a failure, however this is considered to be less friendly to clients, and less informative that authentication can be retried with different TLS credentials (a different certificate/key pair).  Nevertheless, `403` is completely valid and both `401` and `403` are seen in practise.

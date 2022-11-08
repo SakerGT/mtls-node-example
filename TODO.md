@@ -9,5 +9,4 @@ This is a list of things to be done, or would be great to have as [contributions
 * Expand examples (docs and code)
 * Add OCSP check
 * Add certificate transparency checks
-* Add subjectAltName check
   

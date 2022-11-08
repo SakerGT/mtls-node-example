@@ -27,7 +27,7 @@ const options = {
     const err = cert.subjectaltname.includes("DNS:incorrect.url.co.nz");
     if (!err) {
       console.log(
-        "Server certificate does not contain the expect subject alternative name, exiting"
+        "Server certificate does not contain the expected subject alternative name, exiting"
       );
       return err;
     }
@@ -45,7 +45,7 @@ const options = {
       }
 
       hash = crypto.createHash("sha256");
-      console.log("  Public key ping-sha256:", sha256(cert.pubkey));
+      console.log("  Public key pin-sha256:", sha256(cert.pubkey));
       console.log("  Key bits:", cert.bits);
       console.log("  Valid from:", cert.valid_from);
       console.log("  Valid to:  ", cert.valid_to);

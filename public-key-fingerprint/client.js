@@ -43,7 +43,7 @@ const options = {
       console.log('  Certificate SHA256 fingerprint:', cert.fingerprint256);
 
       hash = crypto.createHash('sha256');
-      console.log('  Public key ping-sha256:', sha256(cert.pubkey));
+      console.log('  Public key pin-sha256:', sha256(cert.pubkey));
       console.log('  Key bits:', cert.bits);
       console.log('  Valid from:',cert.valid_from);
       console.log('  Valid to:  ',cert.valid_to);

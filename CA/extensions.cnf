@@ -1,0 +1,4 @@
+subjectAltName=DNS:www.demoservers.co.nz,DNS:test.demoservers.co.nz
+basicConstraints        = CA:FALSE
+extendedKeyUsage        = serverAuth, clientAuth, codeSigning, emailProtection
+keyUsage                = nonRepudiation, digitalSignature, keyEncipherment

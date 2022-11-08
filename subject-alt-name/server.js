@@ -9,19 +9,19 @@ function sha256(s) {
 
 const options = {
 
-  key: fs.readFileSync('CA/server-key.pem'),
-  cert: fs.readFileSync('CA/server-crt.pem'),
-  ca: fs.readFileSync('CA/ca-crt.pem'),
+  key: fs.readFileSync('../CA/server-key.pem'),
+  cert: fs.readFileSync('../CA/server-crt.pem'),
+  ca: fs.readFileSync('../CA/ca-crt.pem'),
   requestCert: true, // require certificate
   rejectUnauthorized: true, // must be signed by our CA
-  requestOCSP: true
  
 };
 
 https.createServer(options, (req, res) => {
     const clientcert = req.socket.getPeerCertificate();
 
-    const clientCN = 'client.demo.co.nz';
+    const clientCN = "incorrect.demo.co.nz"
+    //const clientCN = 'client.demo.co.nz';
     if(clientcert.subject.CN !== clientCN) {
         const msg = 'Certificate verification error: ' +
         `The common name of '${clientcert.subject.CN}' ` +
@@ -33,32 +33,6 @@ https.createServer(options, (req, res) => {
       return;
     }
     
-    // Pin the public key
-    const pubkey256 = '1joByRA4/Q2CtythZpHm0LM6n+7a0/cLmQTafJ5JWF0=';
-    if (sha256(clientcert.pubkey) !== pubkey256) {
-      const msg = 'Certificate verification error: ' +
-        `The public key of '${clientcert.subject.CN}' ` +
-        'does not match our pinned fingerprint\n';
-      res.setHeader('WWW-Authenticate','TLS realm=tls-demo');
-      res.setHeader('Content-Type','text/plain');
-      res.writeHead(401);
-      res.end('Not authorised\n' + msg);
-      return;
-    }
-    
-    // Pin the exact client certificate
-    const cert256 = '7B:9C:62:47:92:84:E0:C9:AC:D5:7C:46:70:' +
-        '51:1F:27:F9:CA:05:20:57:86:48:39:8B:54:3A:DE:A4:AB:02:D7';
-    if (clientcert.fingerprint256 !== cert256) {
-      const msg = 'Certificate verification error: ' +
-        `The certificate of '${clientcert.subject.CN}' ` +
-        'does not match our pinned fingerprint\n';
-      res.setHeader('WWW-Authenticate','TLS realm=tls-demo');
-      res.setHeader('Content-Type','text/plain');
-      res.writeHead(401);
-      res.end('Not authorised\n' + msg);
-      return;
-    }
 
     console.log(new Date()+' '+ 
               req.connection.remoteAddress+' '+ 

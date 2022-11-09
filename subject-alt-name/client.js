@@ -18,13 +18,20 @@ const options = {
 
   checkServerIdentity: function (host, cert) {
     // Make sure the certificate is issued to the host we are connected to
+    if (!cert.subjectaltname) { return undefined }
 
     // Note the format here is defined in RFC 5280 and RFC 4985
-    // However, the simple string includes does not require this to give a positive response
-    // A better way to do this would be split cert.subjectaltname based on the delimiter ','
-    // and do an exact, case-insensitive match.
-    // const err = cert.subjectaltname.includes("DNS:www.demoservers.co.nz");
-    const err = cert.subjectaltname.includes("DNS:incorrect.url.co.nz");
+    // Acceptable alt names:
+    // const altNames = [ "DNS:www.demoservers.co.nz" ]
+    // incorrect alt names:
+    const altNames = [ "DNS:incorrect.url.co.nz", "IP:127.0.0.1" ]
+    
+    // get certificate subject alternative names
+    const certAltNames = cert.subjectaltname.split(",");
+
+    // see if any acceptable alt names appear in the certificate
+    const err = certAltNames.some( r => altNames.indexOf(r) >= 0)
+
     if (!err) {
       console.log(
         "Server certificate does not contain the expected subject alternative name, exiting"

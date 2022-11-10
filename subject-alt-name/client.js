@@ -30,6 +30,8 @@ const options = {
     const certAltNames = cert.subjectaltname.split(",");
 
     // see if any acceptable alt names appear in the certificate
+    // for each of the cert values, see if it exists in the altNames 
+    // allowed
     const err = certAltNames.some( r => altNames.indexOf(r) >= 0)
 
     if (!err) {

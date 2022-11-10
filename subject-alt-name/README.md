@@ -1,4 +1,4 @@
-# Subject common name
+# Subject Alternative Names
 
 This example builds on the [basic](../basic/README.md) scenario, and adds:
 

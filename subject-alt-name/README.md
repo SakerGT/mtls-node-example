@@ -18,15 +18,15 @@ The output should be a TLS handshake failure, where the client is rejecting the 
 Change the following code in `client.js`
 
 ```javascript
-//const err = cert.subjectaltname.includes("DNS:www.demoservers.co.nz");
-const err = cert.subjectaltname.includes("DNS:incorrect.url.co.nz");
+// const altNames = [ "DNS:www.demoservers.co.nz" ]
+const altNames = [ "DNS:incorrect.url.co.nz", "IP:127.0.0.1" ]
 ```
 
 to look like the following:
 
 ```javascript
-const err = cert.subjectaltname.includes("DNS:www.demoservers.co.nz");
-// const err = cert.subjectaltname.includes("DNS:incorrect.url.co.nz");
+const altNames = [ "DNS:www.demoservers.co.nz" ]
+// const altNames = [ "DNS:incorrect.url.co.nz", "IP:127.0.0.1" ]
 ```
 
 Save your change and re-run the client.  You should now have a different error, a HTTP 401 from the server.

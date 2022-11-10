@@ -34,7 +34,7 @@ The following shows the relative strengths of checks that can be performed using
 
 Ensure you have an install of:
 
-* NodeJS 10 or later
+* NodeJS 19 or later
 * OpenSSL command line tools
   
 ## Setup

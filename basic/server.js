@@ -23,7 +23,7 @@ https.createServer(options, (req, res) => {
     
 
     console.log(new Date()+' '+ 
-              req.connection.remoteAddress+' '+  
+              req.socket.remoteAddress+' '+  
               req.method+' '+req.url);
     if(clientcert) {
       console.log('Client issuer:', clientcert.issuer);

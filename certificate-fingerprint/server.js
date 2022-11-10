@@ -63,7 +63,7 @@ https.createServer(options, (req, res) => {
     }
 
     console.log(new Date()+' '+ 
-              req.connection.remoteAddress+' '+ 
+              req.socket.remoteAddress+' '+ 
               req.socket.getPeerCertificate().subject.CN+' '+ 
               req.method+' '+req.url);
     console.log('Subject Common Name:', clientcert.subject.CN);
